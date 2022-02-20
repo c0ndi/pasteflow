@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
 
 	return (
 		<AuthContext.Provider value={{ user, setUser }}>
-			<MantineProvider>
+			<MantineProvider theme={{ colorScheme: "dark", fontFamily: "Poppins, sans-serif" }}>
 				<Component {...pageProps} />
 			</MantineProvider>
 		</AuthContext.Provider>

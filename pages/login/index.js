@@ -1,16 +1,14 @@
 import Head from "next/head";
 import { useAuth } from "../_app";
-import { Box, Button, Input, Text } from "@mantine/core";
-import { auth } from "../../config";
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { Box } from "@mantine/core";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import LoginForm from "../../components/loginForm";
 
 const Home = () => {
 	const { user } = useAuth();
 	const Router = useRouter();
+
 	useEffect(() => {
 		if (user) {
 			Router.push("/");

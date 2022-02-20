@@ -27,7 +27,7 @@ function CodePostInput() {
 				onChange={(e) => setPostCodeData(e.target.value)}
 				style={{ color: "red" }}
 			/>
-			<Button sx={{ marginTop: "1em" }} onClick={() => addPost(codePostData)}>
+			<Button sx={{ marginTop: "1em" }} onClick={() => addPost(codePostData)} radius="md">
 				Add post
 			</Button>
 		</Box>

@@ -5,8 +5,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import CodePostInput from "../components/codePostInput";
 import CodePosts from "../components/codePosts";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Home = () => {
+	const mobile = useMediaQuery("(max-width: 768px)");
+
 	const Router = useRouter();
 	const { user } = useAuth();
 
@@ -22,7 +25,7 @@ const Home = () => {
 				display: "flex",
 				flexDirection: "column",
 				justifyContent: "center",
-				padding: "2.5% 15%",
+				padding: `2.5% ${mobile ? "5%" : "15%"}`,
 			}}
 		>
 			<Head>
@@ -32,13 +35,10 @@ const Home = () => {
 			</Head>
 
 			{user && (
-				<Box>
-					<Box sx={{ position: "absolute", right: "5em", top: "2.5em" }}>
-						<Text>{user.email}</Text>
-					</Box>
+				<>
 					<CodePostInput />
 					<CodePosts />
-				</Box>
+				</>
 			)}
 		</Box>
 	);

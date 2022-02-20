@@ -4,8 +4,11 @@ import { auth } from "../../config";
 import { useState } from "react";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useMediaQuery } from "@mantine/hooks";
 
 function LoginForm() {
+	const mobile = useMediaQuery("(max-width: 768px)");
+
 	const { setUser } = useAuth();
 	const [formData, setFormData] = useState({
 		email: "",
@@ -31,7 +34,15 @@ function LoginForm() {
 	}
 	return (
 		<form onSubmit={handleSubmit}>
-			<Box sx={{ width: 350, display: "flex", gap: "1em", flexDirection: "column" }}>
+			<Box
+				sx={{
+					width: `${mobile ? "300px" : "400px"}`,
+					display: "flex",
+					gap: "1em",
+					flexDirection: "column",
+					color: "#fff",
+				}}
+			>
 				<Text sx={{ fontSize: "1.75rem", fontWeight: "600" }}>Log in</Text>
 				<Text sx={{ paddingTop: "0.75em" }}>Enter your email</Text>
 				<Input placeholder="Email" onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
@@ -40,13 +51,21 @@ function LoginForm() {
 					placeholder="Password"
 					onChange={(e) => setFormData({ ...formData, password: e.target.value })}
 				/>
-				<Button type="submit" sx={{ marginTop: "1em" }}>
+				<Button type="submit" sx={{ marginTop: "1em" }} radius="md">
 					Log in
 				</Button>
 			</Box>
-			<Text sx={{ textAlign: "center", paddingTop: "1em", display: "flex", justifyContent: "center" }}>
+			<Text
+				sx={{
+					textAlign: "center",
+					paddingTop: "1em",
+					display: "flex",
+					justifyContent: "center",
+					color: "#fff",
+				}}
+			>
 				Don't have account?{" "}
-				<Text sx={{ color: "blue" }}>
+				<Text sx={{ color: "#228be6" }}>
 					&nbsp;
 					<Link href={"/register"}>Click here</Link>
 				</Text>
