@@ -4,6 +4,8 @@ import { Box } from "@mantine/core";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import LoginForm from "../../components/loginForm";
+import { onValue, push, ref } from "firebase/database";
+import { db } from "../../config";
 
 const Home = () => {
 	const { user } = useAuth();
@@ -12,6 +14,22 @@ const Home = () => {
 	useEffect(() => {
 		if (user) {
 			Router.push("/");
+
+			onValue(ref(db, "/users"), (snapshot) => {
+				const accountsArr = Object.values(snapshot.val());
+
+				for (let i = 0; i < accountsArr.length; i++) {
+					if (user.uid !== accountsArr[i].userId) {
+						push(ref(db, "/users"), {
+							email: user.email,
+							userId: user.uid,
+							createdAt: user.metadata.createdAt,
+						});
+
+						return false;
+					}
+				}
+			});
 		}
 	}, [user]);
 	return (

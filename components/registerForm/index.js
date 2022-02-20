@@ -1,10 +1,11 @@
 import { Box, Button, Input, Text } from "@mantine/core";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config";
+import { auth, db } from "../../config";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mantine/hooks";
+import { push } from "firebase/database";
 
 function RegisterForm() {
 	const mobile = useMediaQuery("(max-width: 768px)");
