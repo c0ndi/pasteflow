@@ -5,7 +5,7 @@ import { auth, db } from "../../config";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mantine/hooks";
-import { push } from "firebase/database";
+import { push, ref } from "firebase/database";
 
 function RegisterForm() {
 	const mobile = useMediaQuery("(max-width: 768px)");
@@ -19,7 +19,11 @@ function RegisterForm() {
 	function handleSubmit(e) {
 		e.preventDefault();
 		createUserWithEmailAndPassword(auth, formData.email, formData.password)
-			.then(() => {
+			.then((user) => {
+				push(ref(db, "/users"), {
+					userId: user.user.uid,
+				});
+
 				Router.push("/login");
 			})
 			.catch((error) => {
