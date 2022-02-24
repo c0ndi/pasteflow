@@ -25,7 +25,8 @@ function CodePostInput() {
 			<Textarea
 				placeholder="np. console.log('Hello world')"
 				autosize
-				minRows={5}
+				minRows={10}
+				maxRows={10}
 				size="lg"
 				onChange={(e) => setPostCodeData(e.target.value)}
 				style={{ color: "red" }}

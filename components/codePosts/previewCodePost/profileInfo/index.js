@@ -9,6 +9,7 @@ function ProfileInfo({ authorId }) {
 	const [userData, setUserData] = useState({
 		username: "",
 	});
+	const [following, setFollowing] = useState([]);
 
 	useEffect(() => {
 		onValue(ref(db, `/users/${authorId}`), (snapshot) => {
@@ -29,6 +30,7 @@ function ProfileInfo({ authorId }) {
 
 					set(ref(db, `/users/${authorId}`), {
 						followers: allFollowers,
+						following: snapshot.val().following,
 						username: snapshot.val().username,
 						userId: snapshot.val().userId,
 					});
@@ -38,8 +40,29 @@ function ProfileInfo({ authorId }) {
 				onlyOnce: true,
 			},
 		);
-	}
 
+		onValue(
+			ref(db, `users/${user.uid}`),
+			(snapshot) => {
+				const allFollowing = snapshot.val().following;
+
+				if (!allFollowing.includes(authorId)) {
+					allFollowing.push(authorId);
+
+					set(ref(db, `/users/${user.uid}`), {
+						following: allFollowing,
+						followers: snapshot.val().followers,
+						username: snapshot.val().username,
+						userId: snapshot.val().userId,
+					});
+				}
+				setFollowing(allFollowing);
+			},
+			{
+				onlyOnce: true,
+			},
+		);
+	}
 	return (
 		<Box sx={{ display: "flex", alignItems: "center", position: "relative", width: "100%" }}>
 			<Box
@@ -55,6 +78,12 @@ function ProfileInfo({ authorId }) {
 				<img src={`https://avatars.dicebear.com/api/adventurer-neutral/${authorId}.svg`} />
 			</Box>
 			<Text sx={{ fontSize: "2.5rem", padding: "0 2rem", color: "#c2c2c2" }}>@&nbsp;{userData.username}</Text>
+			{authorId !== user.uid &&
+				(following.includes(user.uid) ? (
+					<Button disabled>You already following</Button>
+				) : (
+					<Button onClick={followUser}>Follow user</Button>
+				))}
 		</Box>
 	);
 }

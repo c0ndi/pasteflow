@@ -26,6 +26,7 @@ function RegisterForm() {
 					username: formData.username,
 					userId: user.user.uid,
 					followers: [user.user.uid],
+					following: [user.user.uid],
 				});
 
 				Router.push("/login");
