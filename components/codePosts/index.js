@@ -23,8 +23,8 @@ function CodePosts() {
 	}, []);
 	return (
 		<div>
-			{codePosts.map(({ author, date, postData, authorId }) => (
-				<CodePost author={author} date={date} postData={postData} authorId={authorId} />
+			{codePosts.map(({ author, date, postData, authorId, key }) => (
+				<CodePost author={author} date={date} postData={postData} authorId={authorId} key={key} />
 			))}
 		</div>
 	);

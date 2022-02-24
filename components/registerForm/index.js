@@ -5,13 +5,14 @@ import { auth, db } from "../../config";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mantine/hooks";
-import { push, ref } from "firebase/database";
+import { onValue, push, ref, set } from "firebase/database";
 
 function RegisterForm() {
 	const mobile = useMediaQuery("(max-width: 768px)");
 
 	const Router = useRouter();
 	const [formData, setFormData] = useState({
+		username: "",
 		email: "",
 		password: "",
 	});
@@ -20,8 +21,11 @@ function RegisterForm() {
 		e.preventDefault();
 		createUserWithEmailAndPassword(auth, formData.email, formData.password)
 			.then((user) => {
-				push(ref(db, "/users"), {
+				console.log(user);
+				set(ref(db, `/users/${user.user.uid}`), {
+					username: formData.username,
 					userId: user.user.uid,
+					followers: [user.user.uid],
 				});
 
 				Router.push("/login");
@@ -46,6 +50,11 @@ function RegisterForm() {
 				}}
 			>
 				<Text sx={{ fontSize: "1.75rem", fontWeight: "600" }}>Register your account</Text>
+				<Text sx={{ paddingTop: "0.75em" }}>Enter your username</Text>
+				<Input
+					placeholder="Username"
+					onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+				/>
 				<Text sx={{ paddingTop: "0.75em" }}>Enter your email</Text>
 				<Input placeholder="Email" onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
 				<Text sx={{ paddingTop: "0.75em" }}>Enter your password</Text>
