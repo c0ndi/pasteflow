@@ -5,7 +5,7 @@ import { auth, db } from "../../config";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mantine/hooks";
-import { onValue, push, ref, set } from "firebase/database";
+import { ref, set } from "firebase/database";
 
 function RegisterForm() {
 	const mobile = useMediaQuery("(max-width: 768px)");

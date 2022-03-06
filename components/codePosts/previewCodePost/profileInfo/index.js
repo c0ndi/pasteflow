@@ -1,14 +1,15 @@
-import { Box, Button, Text } from "@mantine/core";
+import { ActionIcon, Box, Button, Text } from "@mantine/core";
 import { onValue, push, ref, set, update } from "firebase/database";
 import { useEffect, useState } from "react";
 import { db } from "../../../../config";
 import { useAuth } from "../../../../pages/_app";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 function ProfileInfo({ authorId }) {
-	const Router = useRouter();
 	const { user } = useAuth();
+	const Router = useRouter();
+
+	const [promptData, setPrompt] = useState(null);
 	const [userData, setUserData] = useState({
 		username: "",
 		following: [],
@@ -16,14 +17,16 @@ function ProfileInfo({ authorId }) {
 	});
 
 	useEffect(() => {
-		onValue(ref(db, `/users/${authorId}`), (snapshot) => {
-			setUserData({
-				username: snapshot.val().username,
-				following: snapshot.val().following,
-				followers: snapshot.val().followers,
+		user &&
+			onValue(ref(db, `/users/${authorId}`), (snapshot) => {
+				setUserData({
+					username: snapshot.val().username,
+					following: snapshot.val().following,
+					followers: snapshot.val().followers,
+				});
 			});
-		});
 	}, [authorId]);
+
 	function followUser() {
 		onValue(
 			ref(db, `/users/${authorId}`),
@@ -70,6 +73,54 @@ function ProfileInfo({ authorId }) {
 
 	return (
 		<Box sx={{ display: "flex", alignItems: "center", position: "relative", width: "100%", marginBottom: "10%" }}>
+			{promptData && (
+				<>
+					<Box
+						sx={{
+							height: "100vh",
+							width: "100%",
+							position: "fixed",
+							top: 0,
+							left: 0,
+							background: "#050505",
+							zIndex: "1",
+							opacity: "0.7",
+						}}
+					></Box>
+					<Box
+						sx={{
+							position: "fixed",
+							zIndex: "2",
+							height: "auto",
+							width: "30%",
+							left: "50%",
+							top: "50%",
+							transform: "translate(-50%, -50%)",
+							background: "#121212",
+							borderRadius: "0.75em",
+						}}
+					>
+						<Box sx={{ position: "absolute", right: "1em", top: "1em" }}>
+							<ActionIcon onClick={() => setPrompt(null)}>
+								<img src="/close.png" style={{ height: "1em", width: "1em" }} />
+							</ActionIcon>
+						</Box>
+						<Box sx={{ padding: "2em" }}>
+							{promptData.map((userData) => (
+								<Text
+									sx={{ color: "#fff", padding: "1em 0", cursor: "pointer" }}
+									onClick={() => {
+										Router.push(`/${userData}`);
+										setPrompt(null);
+									}}
+								>
+									{userData}
+								</Text>
+							))}
+						</Box>
+					</Box>
+				</>
+			)}
 			<Box
 				sx={{
 					overflow: "hidden",
@@ -83,7 +134,8 @@ function ProfileInfo({ authorId }) {
 				<img src={`https://avatars.dicebear.com/api/adventurer-neutral/${authorId}.svg`} />
 			</Box>
 			<Text sx={{ fontSize: "2.5rem", padding: "0 2rem", color: "#c2c2c2" }}>@&nbsp;{userData.username}</Text>
-			{authorId !== user.uid &&
+			{user &&
+				authorId !== user.uid &&
 				(userData.followers.includes(user.uid) ? (
 					<Button disabled>You already following</Button>
 				) : (
@@ -91,20 +143,14 @@ function ProfileInfo({ authorId }) {
 				))}
 			<Box sx={{ position: "absolute", right: "10%", top: "5%" }}>
 				<Text sx={{ color: "#fff" }}>
-					<Text sx={{ fontWeight: "bold" }}>Followers:</Text> <br></br>{" "}
-					{userData.followers.map((follower) => (
-						<Link href={`/${follower}`}>
-							<Text sx={{ cursor: "pointer" }}>{follower}</Text>
-						</Link>
-					))}
+					<Text sx={{ fontWeight: "bold" }} onClick={() => setPrompt(userData.followers)}>
+						Followers: {userData.followers.length - 1}
+					</Text>
 				</Text>
 				<Text sx={{ color: "#fff" }}>
-					<Text sx={{ fontWeight: "bold" }}>Following:</Text> &nbsp;
-					{userData.following.map((follower) => (
-						<Link href={`/${follower}`}>
-							<Text sx={{ cursor: "pointer" }}>{follower}</Text>
-						</Link>
-					))}
+					<Text sx={{ fontWeight: "bold" }} onClick={() => setPrompt(userData.following)}>
+						Following: {userData.following.length - 1}
+					</Text>
 				</Text>
 			</Box>
 		</Box>
