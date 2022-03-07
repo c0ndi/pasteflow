@@ -71,11 +71,15 @@ function ProfileInfo({ authorId }) {
 		);
 	}
 
+	function closePrompt() {
+		setPrompt(null);
+	}
 	return (
 		<Box sx={{ display: "flex", alignItems: "center", position: "relative", width: "100%", marginBottom: "10%" }}>
 			{promptData && (
 				<>
 					<Box
+						onClick={closePrompt}
 						sx={{
 							height: "100vh",
 							width: "100%",
