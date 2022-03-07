@@ -106,17 +106,21 @@ function ProfileInfo({ authorId }) {
 							</ActionIcon>
 						</Box>
 						<Box sx={{ padding: "2em" }}>
-							{promptData.map((userData) => (
-								<Text
-									sx={{ color: "#fff", padding: "1em 0", cursor: "pointer" }}
-									onClick={() => {
-										Router.push(`/${userData}`);
-										setPrompt(null);
-									}}
-								>
-									{userData}
-								</Text>
-							))}
+							{promptData.map((userData) => {
+								if (userData !== authorId) {
+									return (
+										<Text
+											sx={{ color: "#fff", padding: "1em 0", cursor: "pointer" }}
+											onClick={() => {
+												Router.push(`/${userData}`);
+												setPrompt(null);
+											}}
+										>
+											{userData}
+										</Text>
+									);
+								}
+							})}
 						</Box>
 					</Box>
 				</>
