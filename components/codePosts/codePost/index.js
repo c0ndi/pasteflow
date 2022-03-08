@@ -46,7 +46,7 @@ function CodePost({ author, date, postData, authorId }) {
 					<p>{new Date(date).toLocaleDateString()}</p>
 				</Box>
 			</Link>
-			<Prism language="" colorScheme="dark" withLineNumbers>
+			<Prism language="js" colorScheme="dark" withLineNumbers>
 				{postData}
 			</Prism>
 		</Box>
