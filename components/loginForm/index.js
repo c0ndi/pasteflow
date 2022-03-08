@@ -49,6 +49,7 @@ function LoginForm() {
 				<Text sx={{ paddingTop: "0.75em" }}>Enter your password</Text>
 				<Input
 					placeholder="Password"
+					type="password"
 					onChange={(e) => setFormData({ ...formData, password: e.target.value })}
 				/>
 				<Button type="submit" sx={{ marginTop: "1em" }} radius="md">

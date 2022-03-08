@@ -18,6 +18,8 @@ function CodePostInput() {
 			authorId: user.uid,
 			date: serverTimestamp(),
 		});
+
+		setPostCodeData();
 	}
 	return (
 		<Box>
