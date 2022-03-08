@@ -23,16 +23,24 @@ function CodePostInput() {
 		<Box>
 			<Text sx={{ color: "white", fontSize: "1.5rem", paddingBottom: "0.25em" }}>Your code!</Text>
 			<Textarea
-				placeholder="np. console.log('Hello world')"
-				autosize
 				minRows={10}
 				maxRows={10}
+				maxLength={1000}
+				placeholder="np. console.log('Hello world')"
 				size="lg"
-				onChange={(e) => setPostCodeData(e.target.value)}
 				style={{ color: "red" }}
+				onChange={(e) => setPostCodeData(e.target.value)}
 				ref={textarea}
+				autosize
 			/>
-			<Button sx={{ marginTop: "1em" }} onClick={() => addPost(codePostData)} radius="md">
+			{codePostData && codePostData.length > 999 && <Text sx={{ color: "#fff" }}>Too long!</Text>}
+			<Text sx={{ color: "#fff" }}>{codePostData ? 1000 - codePostData.length : 1000} / 1000</Text>
+			<Button
+				sx={{ marginTop: "1em" }}
+				onClick={() => addPost(codePostData)}
+				radius="md"
+				disabled={codePostData ? (codePostData.length > 999 ? true : false) : true}
+			>
 				Add post
 			</Button>
 		</Box>
