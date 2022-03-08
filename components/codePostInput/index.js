@@ -33,8 +33,10 @@ function CodePostInput() {
 				ref={textarea}
 				autosize
 			/>
-			{codePostData && codePostData.length > 999 && <Text sx={{ color: "#fff" }}>Too long!</Text>}
-			<Text sx={{ color: "#fff" }}>{codePostData ? 1000 - codePostData.length : 1000} / 1000</Text>
+			<Box sx={{ display: "flex", justifyContent: "space-between" }}>
+				<Text sx={{ color: "#fff" }}>{codePostData ? 1000 - codePostData.length : 1000} / 1000</Text>
+				{codePostData && codePostData.length > 999 && <Text sx={{ color: "#fff" }}>Too long!</Text>}
+			</Box>
 			<Button
 				sx={{ marginTop: "1em" }}
 				onClick={() => addPost(codePostData)}

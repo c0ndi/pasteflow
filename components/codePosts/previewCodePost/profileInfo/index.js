@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { db } from "../../../../config";
 import { useAuth } from "../../../../pages/_app";
 import { useRouter } from "next/router";
+import { useMediaQuery } from "@mantine/hooks";
 
 function ProfileInfo({ authorId }) {
+	const mobile = useMediaQuery("(max-width: 768px)");
 	const { user } = useAuth();
 	const Router = useRouter();
 
@@ -25,7 +27,7 @@ function ProfileInfo({ authorId }) {
 					followers: snapshot.val().followers,
 				});
 			});
-	}, [authorId]);
+	}, [authorId, user]);
 
 	function followUser() {
 		onValue(
@@ -75,7 +77,16 @@ function ProfileInfo({ authorId }) {
 		setPrompt(null);
 	}
 	return (
-		<Box sx={{ display: "flex", alignItems: "center", position: "relative", width: "100%", marginBottom: "10%" }}>
+		<Box
+			sx={{
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "space-between",
+				position: "relative",
+				width: "100%",
+				marginBottom: "10%",
+			}}
+		>
 			{promptData && (
 				<>
 					<Box
@@ -106,14 +117,15 @@ function ProfileInfo({ authorId }) {
 					>
 						<Box sx={{ position: "absolute", right: "1em", top: "1em" }}>
 							<ActionIcon onClick={() => setPrompt(null)}>
-								<img src="/close.png" style={{ height: "1em", width: "1em" }} />
+								<img src="/close.png" style={{ height: "1em", width: "1em" }} alt="" />
 							</ActionIcon>
 						</Box>
 						<Box sx={{ padding: "2em" }}>
-							{promptData.map((userData) => {
+							{promptData.map((userData, key) => {
 								if (userData !== authorId) {
 									return (
 										<Text
+											key={key}
 											sx={{ color: "#fff", padding: "1em 0", cursor: "pointer" }}
 											onClick={() => {
 												Router.push(`/${userData}`);
@@ -129,19 +141,29 @@ function ProfileInfo({ authorId }) {
 					</Box>
 				</>
 			)}
-			<Box
-				sx={{
-					overflow: "hidden",
-					border: "2px solid #c2c2c2",
-					width: "120px",
-					borderRadius: "9999px",
-					display: "grid",
-					placeItems: "center",
-				}}
-			>
-				<img src={`https://avatars.dicebear.com/api/adventurer-neutral/${authorId}.svg`} />
+			<Box sx={{ display: "flex", alignItems: "center" }}>
+				<Box
+					sx={{
+						overflow: "hidden",
+						border: "2px solid #c2c2c2",
+						width: `${mobile ? "60px" : "150px"}`,
+						borderRadius: "9999px",
+						display: "grid",
+						placeItems: "center",
+					}}
+				>
+					<img src={`https://avatars.dicebear.com/api/adventurer-neutral/${authorId}.svg`} alt="" />
+				</Box>
+				<Text
+					sx={{
+						fontSize: `${mobile ? "1.5rem" : "2.5rem"}`,
+						padding: `${mobile ? "0 0.5em" : "0 2em"}`,
+						color: "#c2c2c2",
+					}}
+				>
+					@&nbsp;{userData.username}
+				</Text>
 			</Box>
-			<Text sx={{ fontSize: "2.5rem", padding: "0 2rem", color: "#c2c2c2" }}>@&nbsp;{userData.username}</Text>
 			{user &&
 				authorId !== user.uid &&
 				(userData.followers.includes(user.uid) ? (
@@ -149,7 +171,7 @@ function ProfileInfo({ authorId }) {
 				) : (
 					<Button onClick={followUser}>Follow user</Button>
 				))}
-			<Box sx={{ position: "absolute", right: "10%", top: "5%" }}>
+			<Box sx={{}}>
 				<Text sx={{ color: "#fff" }}>
 					<Text sx={{ fontWeight: "bold" }} onClick={() => setPrompt(userData.followers)}>
 						Followers: {userData.followers.length - 1}

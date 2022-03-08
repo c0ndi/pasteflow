@@ -64,7 +64,7 @@ function LoginForm() {
 					color: "#fff",
 				}}
 			>
-				Don't have account?{" "}
+				Don&apos;t have account?{" "}
 				<Text sx={{ color: "#228be6" }}>
 					&nbsp;
 					<Link href={"/register"}>Click here</Link>

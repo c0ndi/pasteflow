@@ -18,7 +18,7 @@ const Home = () => {
 		if (!user) {
 			Router.push("/login");
 		}
-	}, [user]);
+	}, [Router, user, authorId]);
 	return (
 		<Box
 			sx={{

@@ -13,7 +13,7 @@ const Home = () => {
 		if (user) {
 			Router.push("/");
 		}
-	}, [user]);
+	}, [Router, user]);
 	return (
 		<Box sx={{ display: "grid", placeItems: "center", height: "90vh" }}>
 			<Head>

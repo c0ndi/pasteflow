@@ -20,7 +20,7 @@ function PreviewCodePost({ authorId }) {
 		});
 
 		return () => setCodePosts();
-	}, []);
+	}, [authorId]);
 
 	return (
 		<div>
