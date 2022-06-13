@@ -1,6 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## PASTEFLOW
 
-## Getting Started
+### Aplikacja o wklejania i dzielenia się kodem!
 
 First, run the development server:
 
@@ -10,25 +10,42 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Opis
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Zbudowana do dzielnia sie skrawkami kodu i udostepniania go na tablicy. W łatwy i prosty dla użytkownika sposób można podejrzeć kody innych użytkownikow oraz obserwować ich. W przyszłości do projektu zostanie dodane wysyłanie powiadomień odnośnie postów innych użytkowników. 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### Technologie 
+  - Next.Js
+  - Tailwind 
+  - Mantine
+  - Firebase
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Instrukcja użytkownika
 
-## Learn More
+1. Rejestracja 
+  - Na podstronie /register zakładamy konto
 
-To learn more about Next.js, take a look at the following resources:
+![image](https://user-images.githubusercontent.com/73940688/173291241-82a3339e-756e-47d9-841f-d25189553014.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Logowanie
+ - Po założeniu konta przechodzimy na /login i logujemy się
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![image](https://user-images.githubusercontent.com/73940688/173291448-67884de7-b14d-44a5-bb69-cbfcb2781224.png)
 
-## Deploy on Vercel
+3. Postowanie kodu 
+  - W miejscu widocznym na zdjęciu wklejamy swój kod, maksymalnie 1000 znaków
+ ![image](https://user-images.githubusercontent.com/73940688/173291588-2372b966-5c90-41ac-85e4-f379d7b2ae5f.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Przeglądanie użytkowników
+  - Klikając w email użytkownika możemy przejść do jego profilu
+  - Na profilu użytkownika możemy przeglądać posty wstawione przez niego
+  ![image](https://user-images.githubusercontent.com/73940688/173291755-119fcf03-d7dd-455e-be65-00f7c8e3342d.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Plany do zmian na przyszłość
+  - Wysyłanie powiadomień do użytkownika o postach obserwowanych osób. 
+  - Zmiana back-endu z Firebase na własny autorski backend
+
+### Autorzy
+  - Gracjan Lucka
+  - Konrad Kowalik
+
